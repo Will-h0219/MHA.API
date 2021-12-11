@@ -59,8 +59,6 @@ namespace MHA.Core.Commands.CharacterCommands
             }
 
             return characterContext.Count(parameters, _collection);
-
-            //return (int)_collection.Find(x => x.UserId == parameters.UserId).CountDocuments();
         }
 
         private bool HasFilters(SearchParameters parameters)
