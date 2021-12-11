@@ -1,0 +1,13 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net5.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\MHA.Core.Contracts\MHA.Core.Contracts.csproj" />
+    <ProjectReference Include="..\MHA.Data\MHA.Data.csproj" />
+    <ProjectReference Include="..\MHA.Models\MHA.Models.csproj" />
+  </ItemGroup>
+
+</Project>
