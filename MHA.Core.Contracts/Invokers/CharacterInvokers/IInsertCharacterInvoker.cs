@@ -9,6 +9,6 @@ namespace MHA.Core.Contracts.Invokers.CharacterInvokers
 {
     public interface IInsertCharacterInvoker
     {
-        Task<NewCharacterDTO> Execute(NewCharacterDTO newCharacter);
+        Task<NewCharacterDTO> Execute(NewCharacterDTO newCharacter, string userEmail);
     }
 }

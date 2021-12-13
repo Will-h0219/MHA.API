@@ -34,9 +34,9 @@ namespace MHA.Core.Services
             return await _getCharacterInvoker.Execute(parameters);
         }
 
-        public async Task<NewCharacterDTO> InsertCharacter(NewCharacterDTO newCharacter)
+        public async Task<NewCharacterDTO> InsertCharacter(NewCharacterDTO newCharacter, string userEmail)
         {
-            return await _insertCharacterInvoker.Execute(newCharacter);
+            return await _insertCharacterInvoker.Execute(newCharacter, userEmail);
         }
 
         public async Task<CharacterDTO> UpdateCharacter(CharacterDTO character, string email)

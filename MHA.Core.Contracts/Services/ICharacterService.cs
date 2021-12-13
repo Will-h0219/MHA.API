@@ -11,7 +11,7 @@ namespace MHA.Core.Contracts.Services
     public interface ICharacterService
     {
         Task<ResponseDTO> GetResponse(SearchParametersDTO parameters);
-        Task<NewCharacterDTO> InsertCharacter(NewCharacterDTO newCharacter);
+        Task<NewCharacterDTO> InsertCharacter(NewCharacterDTO newCharacter, string userEmail);
         Task<CharacterDTO> UpdateCharacter(CharacterDTO character, string email);
         Task<string> DeleteCharacter(string userEmail, string characterId);
     }

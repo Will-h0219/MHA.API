@@ -47,7 +47,8 @@ namespace MHA.API.Controllers
         [HttpPost("create")]
         public async Task<NewCharacterDTO> Post(NewCharacterDTO newCharacter)
         {
-            return await _characterService.InsertCharacter(newCharacter);
+            var email = EmailClaim().Value;
+            return await _characterService.InsertCharacter(newCharacter, email);
         }
 
         [HttpPut("update")]

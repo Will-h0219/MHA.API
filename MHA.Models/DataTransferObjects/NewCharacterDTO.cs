@@ -27,6 +27,5 @@ namespace MHA.Models.DataTransferObjects
         public List<string> Ages { get; set; }
         public List<string> Family { get; set; }
         public Boolean Custom { get; set; }
-        public string UserId { get; set; }
     }
 }
