@@ -78,8 +78,8 @@ The main purpose for making this API, the creation and management of custom char
   ],
   "family": [
     "id_of_related_character",
-    "id_of_related_character",
-    "id_of_related_character"
+    "id_of_related_character2",
+    "id_of_related_character3"
   ]
 }
 ```
@@ -102,7 +102,7 @@ By calling the GET endpoint ```https://localhost:your_host/api/character``` you 
       "affiliation": "Villain",
       "birthday": "1991-05-15",
       "bloodtype": "O-",
-      "description": "Can do Quirk2 really good",
+      "description": "Can do NewQuirk really good",
       "eye": "Green",
       "fightstyle": "Long distance",
       "gender": "male",
@@ -130,3 +130,14 @@ By calling the GET endpoint ```https://localhost:your_host/api/character``` you 
 > All characters are saved as custom by default.
 
 It always returns the first 20 characters, the count of how many characters the user have registered and the amount of pages existing, the currentPage logically is going to be #1 since is a get call with no parameters.
+
+### Applying filters - POST
+In order to view more characters if there's mora than 20 saved in the database, use the endpoint ```https://localhost:44347/api/character``` in a POST request, the body can have any of the next parameters:
+- **page:** Send an integer to say what page are you looking for.
+- **characterId:** The same one as "Id" on a character object, this one allows you to get a specific character from the database.
+- **filters:** This is an object that allows you to filter the character list, the parameters can be:
+  - name
+  - alias
+  - quirk
+  - accupation
+  - affiliation
