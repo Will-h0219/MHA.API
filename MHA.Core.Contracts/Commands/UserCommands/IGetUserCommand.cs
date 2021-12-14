@@ -10,6 +10,6 @@ namespace MHA.Core.Contracts.Commands.UserCommands
 {
     public interface IGetUserCommand
     {
-        User ExecuteByEmail(string email);
+        Task<User> ExecuteByEmail(string email);
     }
 }

@@ -26,9 +26,9 @@ namespace MHA.Core.Services
             _insertUserInvoker.Execute(newUser);
         }
 
-        public string AuthenticateUser(UserCredentialsDTO userCredentials)
+        public async Task<AuthResponseDTO> AuthenticateUser(UserCredentialsDTO userCredentials)
         {
-            return _authenticateUserInvoker.Execute(userCredentials);
+            return await _authenticateUserInvoker.Execute(userCredentials);
         }
     }
 }

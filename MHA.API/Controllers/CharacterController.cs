@@ -36,6 +36,14 @@ namespace MHA.API.Controllers
             return await _characterService.GetResponse(parameters);
         }
 
+        [HttpGet("{id}")]
+        public async Task<CharacterDTO> GetById(string id)
+        {
+            var userEmail = EmailClaim().Value;
+
+            return await _characterService.GetCharacterById(userEmail, id);
+        }
+
         [HttpPost]
         public async Task<ResponseDTO> Search(SearchParametersDTO parameters)
         {            

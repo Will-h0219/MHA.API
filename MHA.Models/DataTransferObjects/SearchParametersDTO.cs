@@ -7,7 +7,6 @@ namespace MHA.Models.DataTransferObjects
     {
         public string UserEmail { get; set; }
         public int Page { get; set; }
-        public string CharacterId { get; set; }
         public Filters Filters { get; set; }
     }
 }

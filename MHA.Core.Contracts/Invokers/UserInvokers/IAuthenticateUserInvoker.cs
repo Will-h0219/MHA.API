@@ -9,6 +9,6 @@ namespace MHA.Core.Contracts.Invokers.UserInvokers
 {
     public interface IAuthenticateUserInvoker
     {
-        string Execute(UserCredentialsDTO userCredentials);
+        Task<AuthResponseDTO> Execute(UserCredentialsDTO userCredentials);
     }
 }

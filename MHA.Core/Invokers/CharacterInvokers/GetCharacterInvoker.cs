@@ -34,7 +34,7 @@ namespace MHA.Core.Invokers.CharacterInvokers
             var info = new Information();
             var currentPage = parametersDTO.Page == 0 ? 1 : parametersDTO.Page;
 
-            var user = _getUserCommand.ExecuteByEmail(parametersDTO.UserEmail);
+            var user = await _getUserCommand.ExecuteByEmail(parametersDTO.UserEmail);
 
             if (parametersDTO.Page > 0)
                 parametersDTO.Page = (parametersDTO.Page - 1) * 20;

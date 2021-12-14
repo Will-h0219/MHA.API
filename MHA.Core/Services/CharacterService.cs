@@ -15,16 +15,19 @@ namespace MHA.Core.Services
     public class CharacterService : ICharacterService
     {
         private readonly IGetCharacterInvoker _getCharacterInvoker;
+        private readonly IGetCharacterByIdInvoker _getCharacterByIdInvoker;
         private readonly IInsertCharacterInvoker _insertCharacterInvoker;
         private readonly IUpdateCharacterInvoker _updateCharacterInvoker;
         private readonly IDeleteCharacterInvoker _deleteCharacterInvoker;
 
-        public CharacterService(IGetCharacterInvoker getCharacterInvoker, 
+        public CharacterService(IGetCharacterInvoker getCharacterInvoker,
+            IGetCharacterByIdInvoker getCharacterByIdInvoker,
             IInsertCharacterInvoker insertCharacterInvoker,            
             IUpdateCharacterInvoker updateCharacterInvoker,
             IDeleteCharacterInvoker deleteCharacterInvoker)
         {
             _getCharacterInvoker = getCharacterInvoker;
+            _getCharacterByIdInvoker = getCharacterByIdInvoker;
             _insertCharacterInvoker = insertCharacterInvoker;
             _updateCharacterInvoker = updateCharacterInvoker;
             _deleteCharacterInvoker = deleteCharacterInvoker;
@@ -32,6 +35,11 @@ namespace MHA.Core.Services
         public async Task<ResponseDTO> GetResponse(SearchParametersDTO parameters)
         {
             return await _getCharacterInvoker.Execute(parameters);
+        }
+
+        public async Task<CharacterDTO> GetCharacterById(string userEmail, string id)
+        {
+            return await _getCharacterByIdInvoker.Execute(userEmail, id);
         }
 
         public async Task<NewCharacterDTO> InsertCharacter(NewCharacterDTO newCharacter, string userEmail)

@@ -23,7 +23,7 @@ namespace MHA.Core.Invokers.CharacterInvokers
 
         public async Task<string> Execute(string userEmail, string characterId)
         {
-            var user = _getUserCommand.ExecuteByEmail(userEmail);
+            var user = await _getUserCommand.ExecuteByEmail(userEmail);
 
             var userId = user.Id.ToString();
 

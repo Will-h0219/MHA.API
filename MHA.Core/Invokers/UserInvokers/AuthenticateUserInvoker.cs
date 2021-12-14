@@ -29,17 +29,37 @@ namespace MHA.Core.Invokers.UserInvokers
             _getUserCommand = getUserCommand;
         }
 
-        public string Execute(UserCredentialsDTO userCredentials)
+        public async Task<AuthResponseDTO> Execute(UserCredentialsDTO userCredentials)
         {
-            var user = _getUserCommand.ExecuteByEmail(userCredentials.Email);
+            var response = new AuthResponseDTO();
 
-            if (user == null) return null;
+            var user = await _getUserCommand.ExecuteByEmail(userCredentials.Email);
+
+            if (user == null)
+            {
+                response.Error = 404;
+                response.Errors = new List<string>
+                {
+                    $"There's no user with {userCredentials.Email} mail"
+                };
+                return response;
+            }
 
             user.Password = _dataProtect.DecryptPassword(user.Password);
 
-            if (user.Password != userCredentials.Password) return null;
+            if (user.Password != userCredentials.Password)
+            {
+                response.Error = 999;
+                response.Errors = new List<string>
+                {
+                    "Password is incorrect."
+                };
+                return response;
+            }
 
-            return _jwtHandler.CreateToken(userCredentials.Email);
+            response.Token = _jwtHandler.CreateToken(userCredentials.Email);
+
+            return response;
         }
     }
 }

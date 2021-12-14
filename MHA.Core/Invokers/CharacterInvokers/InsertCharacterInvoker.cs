@@ -28,7 +28,7 @@ namespace MHA.Core.Invokers.CharacterInvokers
 
         public async Task<NewCharacterDTO> Execute(NewCharacterDTO newCharacter, string userEmail)
         {
-            var user = _getUserCommand.ExecuteByEmail(userEmail);
+            var user = await _getUserCommand.ExecuteByEmail(userEmail);
 
             var character = _mapper.Map<Character>(newCharacter);
             character.UserId = user.Id.ToString();

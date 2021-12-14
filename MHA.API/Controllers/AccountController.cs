@@ -3,6 +3,7 @@ using MHA.Models.DataTransferObjects;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
+using System.Threading.Tasks;
 
 namespace MHA.API.Controllers
 {
@@ -31,11 +32,11 @@ namespace MHA.API.Controllers
         }
 
         [HttpPost("login")]
-        public ActionResult<string> Login(UserCredentialsDTO userCredentials)
+        public async Task<ActionResult<AuthResponseDTO>> Login(UserCredentialsDTO userCredentials)
         {
             try
             {
-                return _userService.AuthenticateUser(userCredentials);
+                return await _userService.AuthenticateUser(userCredentials);
             }
             catch (Exception ex)
             {

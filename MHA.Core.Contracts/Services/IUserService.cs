@@ -10,7 +10,7 @@ namespace MHA.Core.Contracts.Services
 {
     public interface IUserService
     {
-        string AuthenticateUser(UserCredentialsDTO userCredentials);
+        Task<AuthResponseDTO> AuthenticateUser(UserCredentialsDTO userCredentials);
         void InsertUser(NewUserDTO newUser);
     }
 }

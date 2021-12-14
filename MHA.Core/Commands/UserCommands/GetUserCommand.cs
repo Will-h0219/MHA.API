@@ -21,10 +21,10 @@ namespace MHA.Core.Commands.UserCommands
             _users = _clientInstancer.GetCollection<User>();
         }
 
-        public User ExecuteByEmail(string email)
+        public async Task<User> ExecuteByEmail(string email)
         {
-            return _users.Find(x =>x.Email == email)
-                         .FirstOrDefault();
+            return await _users.Find(x =>x.Email == email)
+                         .FirstOrDefaultAsync();
         }
     }
 }
