@@ -34,6 +34,8 @@ namespace MHA.Core.Invokers.CharacterInvokers
 
             var character = _mapper.Map<Character>(updatedCharacter);
 
+            character.UserId = userId;
+
             await _updateCharacterCommand.Execute(character, userId);
 
             return updatedCharacter;
