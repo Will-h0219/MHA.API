@@ -7,6 +7,8 @@ This project has two main functionalities:
 - Basic CRUD operations in MongoDB
 - Basic authentication using Json Web Token
 
+Basically I made this API after studying design patterns in C# and I tried to put in practice something of that. I used Command-Invoker for the logic behind the CRUD operations to keed separated the data layer of logic from the business layer of logic, also I implemented a strategy pattern for the data reading as it involves filters and different scenarios. A cool feature in the project is the use of [NetCore.AutoregisterDI](https://github.com/JonPSmith/NetCore.AutoRegisterDi) for the classes and their interfaces used in the project, it's a pretty cool library that allowed me to maintain a cleaner code.
+
 ## Prerequisites
 1. To take a look at the project you need [Visual Studio](https://visualstudio.microsoft.com), I used the 2022 community version, but it should work with 2019 version as well. (I haven't tried any older versions of the IDE).
 2. For the call to the endpoints I highly recommend the use of [Postman](https://www.postman.com) since the API requires to be authenticated and there's no configuration for Swagger to send the Bearer token... Or you can just go to the [AccountController.cs](./MHA.API/Controllers/CharacterController.cs) and comment the:
@@ -131,13 +133,104 @@ By calling the GET endpoint ```https://localhost:your_host/api/character``` you 
 
 It always returns the first 20 characters, the count of how many characters the user have registered and the amount of pages existing, the currentPage logically is going to be #1 since is a get call with no parameters.
 
+### Get an specific character - GET
+You can get the information of an specific character by calling the GET endpoint ```https://localhost:your_host/api/character/character_id```, note that the character's id comes after a "/", and you will have a response like this:
+```
+{
+  "id": "61b29ab1be2938b5f26a2efe",
+  "name": "Test Character2",
+  "alias": "Alias2",
+  "affiliation": "Villain",
+  "birthday": "1991-05-15",
+  "bloodtype": "O-",
+  "description": "Can do NewQuirk really good",
+  "eye": "Green",
+  "fightstyle": "Long distance",
+  "gender": "male",
+  "hair": "White",
+  "height": null,
+  "kanji": null,
+  "occupation": null,
+  "quirk": "newQuirk",
+  "romaji": null,
+  "status": null,
+  "teams": null,
+  "images": [],
+  "epithet": null,
+  "ages": [],
+  "family": [],
+  "custom": true
+}
+```
+
 ### Applying filters - POST
-In order to view more characters if there's mora than 20 saved in the database, use the endpoint ```https://localhost:44347/api/character``` in a POST request, the body can have any of the next parameters:
+In order to view more characters if there's mora than 20 saved in the database, use the endpoint ```https://localhost:your_host/api/character``` in a POST request, the body can have any of the next parameters:
 - **page:** Send an integer to say what page are you looking for.
-- **characterId:** The same one as "Id" on a character object, this one allows you to get a specific character from the database.
 - **filters:** This is an object that allows you to filter the character list, the parameters can be:
   - name
   - alias
   - quirk
   - accupation
   - affiliation
+
+The filters can be just a name or an alias, even just some letter will create a regular expresion and the API will return the matching results. For example if the body looks like this:
+```
+{
+  "filters": {
+    "name": "test character1"
+  }
+}
+```
+The response could be a list of all characters that match with the name "test character1" including "test character10", "test character11" and so on:
+```
+{
+  "info": {
+      "currentPage": 1,
+      "count": 4,
+      "pages": 1
+  },
+  "result": [
+    {
+      "id": "61b29adabe2938b5f26a2f06",
+      "name": "Test Character1",
+      ...
+      "custom": true
+    },
+    {
+      "id": "61b29b17be2938b5f26a2f0c",
+      "name": "Test Character10",
+      ...
+      "custom": true
+    },
+    {
+      "id": "61b29b21be2938b5f26a2f0e",
+      "name": "Test Character11",
+      ...
+      "custom": true
+    },
+    {
+      "id": "61b29d4fbe2938b5f26a2f60",
+      "name": "Test Character100",
+      ...
+      "custom": true
+    }
+  ]
+}
+```
+
+### Updating a character - PUT
+By calling the endpoint ```https://localhost:your_host/api/character/update``` in a PUT request, you can update the data of a character, the body just needs the data that'll be updated, however, the id is meant to be required and have in mind that the client knows it and sent it always in the petition. An example is shown next:
+```
+{
+  "id": "61b29ab1be2938b5f26a2efe",
+  "name": "Updated character",
+  "alias": "Super slime",
+  "affiliation": "Hero",
+  "description": "Can transform in an elemental slime from any elemental like water, fire, geo, thunder",
+  "fightstyle": "Mele",
+  "gender": "male",
+  "quirk": "transformation"
+}
+```
+### Deleting a character - DELETE
+To delete a character it's pretty simple, just suse the endpoint ```https://localhost:your_host/api/character/delete?id=character_id``` with the id as a query parameter, it deletes that specific character.
